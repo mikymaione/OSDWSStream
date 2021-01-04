@@ -13,10 +13,12 @@ FetchContent_Declare(asio-cmake
 set(ASIO_CMAKE_ASIO_TAG asio-1-12-1)
 FetchContent_MakeAvailable(asio-cmake)
 
+find_package(SDL2 REQUIRED)
 find_package(OpenSSL REQUIRED)
 find_package(ZLIB)
 
 include_directories(${ZLIB_INCLUDE_DIRS})
+include_directories(${SDL2_INCLUDE_DIRS})
 
 add_executable(src
         main.cpp
@@ -39,4 +41,5 @@ add_executable(src
 target_link_libraries(src
         PRIVATE asio
         OpenSSL::SSL
+        ${SDL2_LIBRARIES}
         ${ZLIB_LIBRARIES})

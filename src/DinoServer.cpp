@@ -2,5 +2,5 @@
 
 void DinoServer::accept()
 {
-    callBack();
+    callBack(this);
 }

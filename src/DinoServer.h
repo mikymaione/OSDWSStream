@@ -10,7 +10,7 @@
 class DinoServer : public webpp::ws_server
 {
 public:
-    DinoServer(std::function<void()> callBack)
+    DinoServer(std::function<void(DinoServer *)> callBack)
             : callBack(callBack)
     {}
 
@@ -18,7 +18,7 @@ protected:
     void accept();
 
 private:
-    std::function<void()> callBack;
+    std::function<void(DinoServer *)> callBack;
 };
 
 #endif //SRC_DINOSERVER_H
