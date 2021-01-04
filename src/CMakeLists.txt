@@ -34,7 +34,7 @@ add_executable(src
         strformat.h strformat.cpp
         vecstream.h vecstream.cpp
         corestr.h corestr.cpp
-        md5.h md5.cpp)
+        md5.h md5.cpp DinoServer.cpp DinoServer.h)
 
 target_link_libraries(src
         PRIVATE asio
