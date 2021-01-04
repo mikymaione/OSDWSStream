@@ -1,5 +1,6 @@
 #include "DinoServer.h"
 
+#include <cstdint>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_net.h>
 
@@ -33,8 +34,10 @@ void SDLCose()
 
         SDL_RenderPresent(renderer);
 
-        char bitmap[310000];
+        auto cells_number = surface->h * surface->w;
+        char bitmap[cells_number];
         auto RWops = SDL_RWFromMem(bitmap, sizeof(bitmap));
+
         SDL_SaveBMP_RW(surface, RWops, 1);
 
         SDL_Quit();
