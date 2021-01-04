@@ -1,5 +1,7 @@
 // license:MIT
 // copyright-holders:Ole Christian Eidheim, Miodrag Milanovic
+#pragma once
+
 #ifndef MAME_LIB_UTIL_SERVER_WS_IMPL_HPP
 #define MAME_LIB_UTIL_SERVER_WS_IMPL_HPP
 
@@ -313,7 +315,8 @@ namespace webpp
 
         ///fin_rsv_opcode: 129=one fragment, text, 130=one fragment, binary, 136=close connection.
         ///See http://tools.ietf.org/html/rfc6455#section-5.2 for more information
-        void send(std::shared_ptr<webpp::Connection> conn, const std::shared_ptr<SendStream> &message_stream,
+        void send(std::shared_ptr<webpp::Connection> conn,
+                  const std::shared_ptr<SendStream> &message_stream,
                   const std::function<void(const std::error_code &)> &callback = nullptr,
                   unsigned char fin_rsv_opcode = 129) const
         {

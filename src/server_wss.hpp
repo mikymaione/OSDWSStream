@@ -1,9 +1,13 @@
 // license:MIT
 // copyright-holders:Ole Christian Eidheim, Miodrag Milanovic
+#pragma once
+
 #ifndef SERVER_WSS_HPP
 #define SERVER_WSS_HPP
 
 #include "server_ws.hpp"
+#include "server_ws_impl.hpp"
+
 #include <asio/ssl.hpp>
 #include <openssl/ssl.h>
 #include <algorithm>
