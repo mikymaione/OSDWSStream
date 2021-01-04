@@ -3,4 +3,33 @@ project(src)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(src main.cpp TCPServer.cpp TCPServer.hpp)
+include(FetchContent)
+
+FetchContent_Declare(asio-cmake
+        GIT_REPOSITORY https://github.com/kingsamchen/asio-cmake.git
+        GIT_TAG origin/master)
+
+# Specify asio version
+set(ASIO_CMAKE_ASIO_TAG asio-1-12-1)
+FetchContent_MakeAvailable(asio-cmake)
+
+find_package(ZLIB)
+include_directories(${ZLIB_INCLUDE_DIRS})
+
+add_executable(src
+        main.cpp
+        hashing.h hashing.cpp
+        server_ws_impl.hpp
+        path_to_regex.hpp path_to_regex.cpp
+        base64.hpp
+        crypto.hpp
+        osdcore.h osdcore.cpp
+        osdcomm.h
+        strformat.h strformat.cpp
+        vecstream.h vecstream.cpp
+        corestr.h corestr.cpp
+        md5.h md5.cpp)
+
+target_link_libraries(src
+        PRIVATE asio
+        ${ZLIB_LIBRARIES})
