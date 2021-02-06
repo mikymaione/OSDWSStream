@@ -9,6 +9,8 @@ namespace WSServer
 
         static void Main(string[] args)
         {
+            var blob = System.IO.File.ReadAllBytes("video.mp4");
+
             var sockets = new List<IWebSocketConnection>();
             var server = new WebSocketServer("ws://127.0.0.1:8888/");
             server.ListenerSocket.NoDelay = true;
@@ -37,12 +39,10 @@ namespace WSServer
                 */
             });
 
-            var img = System.IO.File.ReadAllBytes("img.jpg");
-
             var input = Console.ReadLine();
             while (input != "exit")
             {
-                sockets.ForEach(s => s.Send(img));
+                sockets.ForEach(s => s.Send(blob));
                 input = Console.ReadLine();
             }
         }

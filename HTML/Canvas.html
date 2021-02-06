@@ -20,23 +20,23 @@
 
 		function Start()
 		{
-			const uri = "ws://localhost:8888";
+			const uri = "ws://127.0.0.1:8888";
 
 			let myCanvas = document.getElementById("myCanvas");
 			let context = myCanvas.getContext("2d"); // 2d, webgl, webgl2, bitmaprenderer
 
 			let webSocket = window.WebSocket || window.MozWebSocket,
-				ws = new webSocket('ws://127.0.0.1:8888');
+				ws = new webSocket(uri);
 
 			ws.onopen = function (e)
 			{
 				console.log('Connection opened');
-			}
+			};
 
 			ws.onclose = function (e)
 			{
 				console.log('Connection closed');
-			}
+			};
 
 			ws.onmessage = function (event)
 			{

@@ -18,35 +18,52 @@
 
 		function Start()
 		{
-			const mimeCodec = 'video/mp4; codecs="avc1.42E01E, mp4a.40.2"';
+			//const mimeCodec = 'video/mp4; codecs="avc1.42E01E, mp4a.40.2"';
+			const mimeCodec = 'video/mp4';
 
 			if (MediaSource.isTypeSupported(mimeCodec))
 			{
-				const uri = "ws://localhost:8888";
+				const uri = "ws://127.0.0.1:8888";
 
 				let monitor = document.getElementById('monitor');
 
+				let sourceBuffer;
 				let mediaSource = new MediaSource();
 				monitor.src = URL.createObjectURL(mediaSource);
 
-				let sourceBuffer = mediaSource.addSourceBuffer(mimeCodec);
-
-				let socket = new WebSocket(uri);
-				//socket.binaryType = 'arraybuffer';
-
-				// Connection opened				
-				socket.onopen = function (event)
+				mediaSource.onsourceopen = function (e)
 				{
-					debugger;
-					socket.send('Hello Server!');
+					let mediaSource = this;
+					sourceBuffer = mediaSource.addSourceBuffer(mimeCodec);
 				};
 
-				// Listen for messages				
-				socket.onmessage = function (event)
+				let ws = new WebSocket(uri);
+				//ws.binaryType = 'arraybuffer';
+
+				ws.onopen = function (e)
 				{
-					debugger;
-					console.log(event.data);
-					//sourceBuffer.appendBuffer(event.data);
+					console.log('Connection opened');
+				};
+
+				ws.onclose = function (e)
+				{
+					console.log('Connection closed');
+				};
+
+				ws.onmessage = function (event)
+				{
+					let blob = event.data;
+
+					blob.arrayBuffer().then(buffer =>
+					{
+						sourceBuffer.addEventListener('updateend', function (_)
+						{
+							mediaSource.endOfStream();
+							monitor.play();
+						});
+
+						sourceBuffer.appendBuffer(buffer)
+					});
 				};
 			}
 			else 
