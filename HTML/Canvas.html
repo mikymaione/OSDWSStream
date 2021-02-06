@@ -25,14 +25,26 @@
 			let myCanvas = document.getElementById("myCanvas");
 			let context = myCanvas.getContext("2d"); // 2d, webgl, webgl2, bitmaprenderer
 
-			let webSocket = new WebSocket(uri);
+			let webSocket = window.WebSocket || window.MozWebSocket,
+				ws = new webSocket('ws://127.0.0.1:8888');
 
-			webSocket.onmessage = function (event)
+			ws.onopen = function (e)
 			{
-				context.drawImage(event.data);
-			};
+				console.log('Connection opened');
+			}
 
-			// webSocket.close();
+			ws.onclose = function (e)
+			{
+				console.log('Connection closed');
+			}
+
+			ws.onmessage = function (event)
+			{
+				createImageBitmap(event.data).then((img) =>
+				{
+					context.drawImage(img, 0, 0);
+				});
+			};
 		}
 
 		Start();

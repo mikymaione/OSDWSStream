@@ -37,13 +37,16 @@
 				// Connection opened				
 				socket.onopen = function (event)
 				{
-					//socket.send('Hello Server!');
+					debugger;
+					socket.send('Hello Server!');
 				};
 
 				// Listen for messages				
 				socket.onmessage = function (event)
 				{
-					sourceBuffer.appendBuffer(event.data);
+					debugger;
+					console.log(event.data);
+					//sourceBuffer.appendBuffer(event.data);
 				};
 			}
 			else 
