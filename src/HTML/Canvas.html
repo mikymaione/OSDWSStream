@@ -2,27 +2,41 @@
 <html>
 
 <head>
-    <title>Streaming</title>
+	<title>Streaming</title>
 </head>
 
 <body>
 
-    <canvas id="myCanvas" width="500" height="500" style="border:1px solid #000000;">
-        Your browser does not support the HTML canvas tag.
-    </canvas>
+	<canvas id="myCanvas" width="500" height="500" style="border:1px solid #000000;">
+		Your browser does not support the HTML canvas tag.
+	</canvas>
 
-    <script>
-        var myCanvas = document.getElementById("myCanvas");
-        var context = myCanvas.getContext("2d"); // 2d, webgl, webgl2, bitmaprenderer
+	<script>
+		function FullScreen(monitor)
+		{
+			//document.exitFullscreen();
+			monitor.requestFullscreen();
+		}
 
-        var webSocket = new WebSocket("wss://www.example.com/socketserver");
+		function Start()
+		{
+			const uri = "ws://localhost:8888";
 
-        webSocket.onmessage = function (event) {
-            context.drawImage(event.data);
-        };
+			let myCanvas = document.getElementById("myCanvas");
+			let context = myCanvas.getContext("2d"); // 2d, webgl, webgl2, bitmaprenderer
 
-        webSocket.close();
-    </script>
+			let webSocket = new WebSocket(uri);
+
+			webSocket.onmessage = function (event)
+			{
+				context.drawImage(event.data);
+			};
+
+			// webSocket.close();
+		}
+
+		Start();
+	</script>
 </body>
 
 </html>

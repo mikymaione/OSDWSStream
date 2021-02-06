@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html>
 
+<head>
+	<title>Streaming</title>
+</head>
+
 <body>
 
 	<video id="monitor" autoplay></video>
@@ -30,17 +34,17 @@
 				let socket = new WebSocket(uri);
 				//socket.binaryType = 'arraybuffer';
 
-				// Connection opened
-				socket.addEventListener('open', function (event)
+				// Connection opened				
+				socket.onopen = function (event)
 				{
 					//socket.send('Hello Server!');
-				});
+				};
 
-				// Listen for messages
-				socket.addEventListener('message', function (event)
+				// Listen for messages				
+				socket.onmessage = function (event)
 				{
 					sourceBuffer.appendBuffer(event.data);
-				});
+				};
 			}
 			else 
 			{
