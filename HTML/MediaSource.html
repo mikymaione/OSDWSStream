@@ -56,12 +56,7 @@
 
 					blob.arrayBuffer().then(buffer =>
 					{
-						sourceBuffer.addEventListener('updateend', function (_)
-						{
-							mediaSource.endOfStream();
-							monitor.play();
-						});
-
+						debugger;
 						sourceBuffer.appendBuffer(buffer)
 					});
 				};
