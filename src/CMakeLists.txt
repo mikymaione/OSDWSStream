@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.12)
+cmake_minimum_required(VERSION 3.17)
 project(src)
 
 set(CMAKE_CXX_STANDARD 17)
@@ -11,19 +11,14 @@ FetchContent_Declare(asio-cmake
 
 # Specify asio version
 set(ASIO_CMAKE_ASIO_TAG asio-1-12-1)
+FetchContent_MakeAvailable(asio-cmake)
 
-FetchContent_GetProperties(asio-cmake)
-if(NOT asio-cmake_POPULATED)
-  FetchContent_Populate(asio-cmake)
-  add_subdirectory(${asio-cmake_SOURCE_DIR} ${asio-cmake_BINARY_DIR})
-endif()
+find_package(SDL2 REQUIRED)
+find_package(OpenSSL REQUIRED)
+find_package(ZLIB)
 
-#find_package(SDL2 REQUIRED)
-#find_package(OpenSSL REQUIRED)
-#find_package(ZLIB)
-
-#include_directories(${ZLIB_INCLUDE_DIRS})
-#include_directories(${SDL2_INCLUDE_DIRS})
+include_directories(${ZLIB_INCLUDE_DIRS})
+include_directories(${SDL2_INCLUDE_DIRS})
 
 add_executable(src
         main.cpp
@@ -44,4 +39,7 @@ add_executable(src
         md5.h md5.cpp DinoServer.cpp DinoServer.h)
 
 target_link_libraries(src
-        PRIVATE asio)
+        PRIVATE asio
+        OpenSSL::SSL
+        ${SDL2_LIBRARIES}
+        ${ZLIB_LIBRARIES})
